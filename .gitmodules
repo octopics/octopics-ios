@@ -1,0 +1,3 @@
+[submodule "AFGitHubClient"]
+	path = AFGitHubClient
+	url = git@github.com:ngs/AFGitHubClient.git
