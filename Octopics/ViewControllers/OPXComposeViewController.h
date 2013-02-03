@@ -13,7 +13,7 @@
 
 @property (nonatomic, copy) UIImage *image;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
-@property (weak, nonatomic) IBOutlet UILabel *placeholderLabel;
+@property (weak, nonatomic) IBOutlet UITextView *placeholderTextView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 - (IBAction)done:(id)sender;

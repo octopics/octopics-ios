@@ -25,19 +25,20 @@
 #pragma mark -
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  OPXSetDefaultCacheOn();
   [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
   AFGitHubAPIClient *client = [AFGitHubAPIClient clientWithClientID:kAFGitHubClientID secret:kAFGitHubClientSecret];
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  NSString *accessToken = [defaults objectForKey:kOPSDefaultsAccessTokenKey];
+  NSString *accessToken = [defaults objectForKey:kOPXDefaultsAccessTokenKey];
   if(AFGitHubIsStringWithAnyText(accessToken))
     [client setAuthorizationHeaderWithToken:accessToken];
-  id data = [defaults objectForKey:kOPSDefaultsCurrentHeadKey];
+  id data = [defaults objectForKey:kOPXDefaultsCurrentHeadKey];
   if(data)
     self.currentHead = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-  data = [defaults objectForKey:kOPSDefaultsCurrentUserKey];
+  data = [defaults objectForKey:kOPXDefaultsCurrentUserKey];
   if(data)
     self.currentUser = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-  data = [defaults objectForKey:kOPSDefaultsCurrentRepositoryKey];
+  data = [defaults objectForKey:kOPXDefaultsCurrentRepositoryKey];
   if(data)
     self.currentRepository = [NSKeyedUnarchiver unarchiveObjectWithData:data];
   
@@ -107,20 +108,20 @@
   NSData *userData = [NSKeyedArchiver archivedDataWithRootObject:self.currentUser];
   NSData *headData = [NSKeyedArchiver archivedDataWithRootObject:self.currentHead];
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setObject:reposData forKey:kOPSDefaultsCurrentRepositoryKey];
-  [defaults setObject:userData forKey:kOPSDefaultsCurrentUserKey];
-  [defaults setObject:headData forKey:kOPSDefaultsCurrentHeadKey];
+  [defaults setObject:reposData forKey:kOPXDefaultsCurrentRepositoryKey];
+  [defaults setObject:userData forKey:kOPXDefaultsCurrentUserKey];
+  [defaults setObject:headData forKey:kOPXDefaultsCurrentHeadKey];
 }
 
 #pragma mark - Notification Observer
 
 - (void)didLogin:(NSNotification *)note {
   AFOAuthCredential *credential = note.userInfo[@"credential"];
-  [[NSUserDefaults standardUserDefaults] setObject:credential.accessToken forKey:kOPSDefaultsAccessTokenKey];
+  [[NSUserDefaults standardUserDefaults] setObject:credential.accessToken forKey:kOPXDefaultsAccessTokenKey];
 }
 
 - (void)didLogout:(NSNotification *)note {
-  [[NSUserDefaults standardUserDefaults] removeObjectForKey:kOPSDefaultsAccessTokenKey];
+  [[NSUserDefaults standardUserDefaults] removeObjectForKey:kOPXDefaultsAccessTokenKey];
   self.currentHead = nil;
   self.currentRepository = nil;
   self.currentUser = nil;

@@ -94,7 +94,7 @@
   [client
    initRepository:repo
    success:^(AFGitHubAPIRequestOperation *operation, AFGitHubAPIResponse *responseObject) {
-     [SVProgressHUD showSuccessWithStatus:@"Done!"];
+     [SVProgressHUD showSuccessWithStatus:@"Complete"];
      AFGitHubReference *ref = [responseObject first];
      AFGitHubCommit *commit = (AFGitHubCommit *)ref.object;
      OPXAppDelegate *appDelegate = [OPXAppDelegate current];

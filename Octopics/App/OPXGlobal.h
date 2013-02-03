@@ -10,7 +10,11 @@
 #import "AFGitHub.h"
 #import "AFGitHubGlobal.h"
 
-extern NSString *const kOPSDefaultsAccessTokenKey;
-extern NSString *const kOPSDefaultsCurrentUserKey;
-extern NSString *const kOPSDefaultsCurrentRepositoryKey;
-extern NSString *const kOPSDefaultsCurrentHeadKey;
+extern NSString *const kOPXDefaultsAccessTokenKey;
+extern NSString *const kOPXDefaultsCurrentUserKey;
+extern NSString *const kOPXDefaultsCurrentRepositoryKey;
+extern NSString *const kOPXDefaultsCurrentHeadKey;
+extern NSString *const kOPXNotificationNewPicture;
+
+void OPXSetDefaultCacheOn();
+void OPXSetDefaultCacheOff();

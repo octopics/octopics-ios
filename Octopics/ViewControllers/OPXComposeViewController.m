@@ -27,16 +27,16 @@
 
 - (void)viewDidLayoutSubviews {
   [self.imageView setImage:self.image];
+  self.placeholderTextView.frame = self.textView.frame;
   [super viewDidLayoutSubviews];
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-  self.placeholderLabel.hidden = YES;
   return YES;
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
-  self.placeholderLabel.hidden = AFGitHubIsStringWithAnyText(textView.text);
+  self.placeholderTextView.hidden = AFGitHubIsStringWithAnyText(textView.text);
   return YES;
 }
 
@@ -46,11 +46,13 @@
 }
 
 - (IBAction)done:(id)sender {
+  [SVProgressHUD showWithStatus:@"Transaction in progress..." maskType:SVProgressHUDMaskTypeGradient];
   [[[OPXAppDelegate current] currentRepository]
    postImage:self.image
    withMessage:self.textView.text
    success:^(AFGitHubAPIRequestOperation *operation, AFGitHubAPIResponse *responseObject) {
-     [SVProgressHUD showSuccessWithStatus:@"Done!"];
+     [SVProgressHUD showSuccessWithStatus:@"Complete"];
+     [[NSNotificationCenter defaultCenter] postNotificationName:kOPXNotificationNewPicture object:nil userInfo:nil];
      [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
    }failure:^(AFGitHubAPIRequestOperation *operation, NSError *error) {
      [SVProgressHUD showErrorWithStatus:error.localizedDescription];
@@ -64,6 +66,7 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
   NSString *after = [textView.text stringByReplacingCharactersInRange:range withString:text];
   self.stubCommit.message = after;
+  self.placeholderTextView.hidden = AFGitHubIsStringWithAnyText(after);
   return YES;
 }
 
