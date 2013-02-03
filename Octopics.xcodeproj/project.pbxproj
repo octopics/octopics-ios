@@ -26,6 +26,7 @@
 		851B42C116BDD75F0029AEFA /* AFGitHubRepositoryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 851B42C016BDD75F0029AEFA /* AFGitHubRepositoryListViewController.m */; };
 		858946F416BDD95500827EDB /* AFGitHubRepository+Octopics.m in Sources */ = {isa = PBXBuildFile; fileRef = 858946F316BDD95500827EDB /* AFGitHubRepository+Octopics.m */; };
 		858946F716BDECE400827EDB /* Page.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 858946F516BDECE400827EDB /* Page.mustache */; };
+		858946FA16BDF9B900827EDB /* Index.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 858946F816BDF9B900827EDB /* Index.mustache */; };
 		85C67BD316BCC393009CC38D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85C67BD216BCC393009CC38D /* UIKit.framework */; };
 		85C67BD516BCC393009CC38D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85C67BD416BCC393009CC38D /* Foundation.framework */; };
 		85C67BD716BCC393009CC38D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85C67BD616BCC393009CC38D /* CoreGraphics.framework */; };
@@ -108,6 +109,7 @@
 		858946F216BDD95500827EDB /* AFGitHubRepository+Octopics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AFGitHubRepository+Octopics.h"; path = "Octopics/Categories/AFGitHubRepository+Octopics.h"; sourceTree = SOURCE_ROOT; };
 		858946F316BDD95500827EDB /* AFGitHubRepository+Octopics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AFGitHubRepository+Octopics.m"; path = "Octopics/Categories/AFGitHubRepository+Octopics.m"; sourceTree = SOURCE_ROOT; };
 		858946F616BDECE400827EDB /* en */ = {isa = PBXFileReference; lastKnownFileType = text; name = en; path = en.lproj/Page.mustache; sourceTree = "<group>"; };
+		858946F916BDF9B900827EDB /* en */ = {isa = PBXFileReference; lastKnownFileType = text; name = en; path = en.lproj/Index.mustache; sourceTree = "<group>"; };
 		85C67BCF16BCC393009CC38D /* Octopics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Octopics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85C67BD216BCC393009CC38D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		85C67BD416BCC393009CC38D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -293,6 +295,7 @@
 				85C67C4316BD4035009CC38D /* ViewControllers */,
 				85C67BEA16BCC393009CC38D /* MainStoryboard.storyboard */,
 				85C67BD916BCC393009CC38D /* Supporting Files */,
+				858946F816BDF9B900827EDB /* Index.mustache */,
 				858946F516BDECE400827EDB /* Page.mustache */,
 			);
 			path = Octopics;
@@ -502,6 +505,7 @@
 				851B429D16BD52A90029AEFA /* 86-camera.png in Resources */,
 				851B429E16BD52A90029AEFA /* 86-camera@2x.png in Resources */,
 				858946F716BDECE400827EDB /* Page.mustache in Resources */,
+				858946FA16BDF9B900827EDB /* Index.mustache in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,6 +618,14 @@
 				858946F616BDECE400827EDB /* en */,
 			);
 			name = Page.mustache;
+			sourceTree = "<group>";
+		};
+		858946F816BDF9B900827EDB /* Index.mustache */ = {
+			isa = PBXVariantGroup;
+			children = (
+				858946F916BDF9B900827EDB /* en */,
+			);
+			name = Index.mustache;
 			sourceTree = "<group>";
 		};
 		85C67BDB16BCC393009CC38D /* InfoPlist.strings */ = {

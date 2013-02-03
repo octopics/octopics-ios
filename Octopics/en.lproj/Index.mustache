@@ -11,9 +11,11 @@
   </head>
   <body>
     <div class="wrapper">
-      <p><img src="{{image_url}}" /></p>
-      <p>{{created_at}}</p>
-      <p><strong>{{message}}</strong></p>
+      {{#picts}}
+        <p><a href="{{permalink}}"><img src="{{image_url}}" /></a></p>
+        <p>{{created_at}}</p>
+        <p><strong>{{message}}</strong></p>
+      {{/picts}}
     </div>
   </body>
 </html>

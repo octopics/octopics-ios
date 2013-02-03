@@ -63,12 +63,14 @@
         }
         [buf insertObject:dict atIndex:0];
         NSError *error;
+        AFGitHubBlob *indexHtmlBlob = [self indexHTMLBlobWithArray:buf error:&error];
         AFGitHubBlob *jsonBlob = [self indexJSONBlobWithArray:buf error:&error];
-        [self commitBlobs:@[pictureBlob, jsonBlob, htmlBlob] withMessage:message success:success failure:failure];
+        [self commitBlobs:@[pictureBlob, jsonBlob, htmlBlob, indexHtmlBlob] withMessage:message success:success failure:failure];
       }
       failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         AFGitHubBlob *jsonBlob = [self indexJSONBlobWithArray:@[dict] error:&error];
-        [self commitBlobs:@[pictureBlob, jsonBlob, htmlBlob] withMessage:message success:success failure:failure];
+        AFGitHubBlob *indexHtmlBlob = [self indexHTMLBlobWithArray:@[dict] error:&error];
+        [self commitBlobs:@[pictureBlob, jsonBlob, htmlBlob, indexHtmlBlob] withMessage:message success:success failure:failure];
       }];
      [op setCacheResponseBlock:^NSCachedURLResponse *(NSURLConnection *connection, NSCachedURLResponse *cachedResponse) {
        return nil;
@@ -86,6 +88,12 @@
                                                             mode:AFGitHubDataModeFile
                                                             path:@"octopics.json"];
   return jsonBlob;
+}
+
+- (AFGitHubBlob *)indexHTMLBlobWithArray:(NSArray *)array error:(NSError **)error {
+  NSString *htmlContent = [GRMustacheTemplate renderObject:@{ @"picts": array } fromResource:@"Index" bundle:nil error:error];
+  AFGitHubBlob *indexHtmlBlob = [[AFGitHubBlob alloc] initWithContent:htmlContent mode:AFGitHubDataModeFile path:@"index.html"];
+  return indexHtmlBlob;
 }
 
 - (void)commitBlobs:(NSArray *)blobs withMessage:(NSString *)message
@@ -118,7 +126,7 @@
      } failure:failure];
    }
    failure:failure];
-
+  
 }
 
 @end
