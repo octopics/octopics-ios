@@ -28,6 +28,11 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPostNewPicture:) name:kOPXNotificationNewPicture object:nil];
+  UIRefreshControl *refreshControl = UIRefreshControl.alloc.init;
+  [refreshControl addTarget:self action:@selector(startRefresh:)
+           forControlEvents:UIControlEventValueChanged];
+  [self.tableView addSubview:refreshControl];
+  self.refreshControl = refreshControl;
 }
 
 - (void)viewDidUnload {
@@ -55,6 +60,7 @@
   } else {
     OPXSetDefaultCacheOn();
   }
+  [self.refreshControl beginRefreshing];
   AFJSONRequestOperation *op =
   [AFJSONRequestOperation
    JSONRequestOperationWithRequest:req
@@ -62,15 +68,16 @@
      self.pics = JSON;
      OPXSetDefaultCacheOn();
      [self.tableView reloadData];
+     [self.refreshControl endRefreshing];
      if(nocache) {
        double delayInSeconds = 2.0;
        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-         
          [self.tableView scrollToNearestSelectedRowAtScrollPosition:UITableViewScrollPositionTop animated:YES];
        });
      }
    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+     [self.refreshControl endRefreshing];
      OPXSetDefaultCacheOn();
    }];
   if(nocache)
@@ -133,11 +140,19 @@
 #pragma mark - Notification Observer
 
 - (void)didPostNewPicture:(NSNotification *)notif {
-  double delayInSeconds = 2.0;
-  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-    [self reload:YES];
-  });
+  if(AFGitHubIsArrayWithObjects(notif.userInfo[@"pics"])) {
+    self.pics = notif.userInfo[@"pics"];
+    double delayInSeconds = 3.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+      [self.tableView reloadData];
+      [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    });
+  }
+}
+
+- (void)startRefresh:(id)sender {
+  [self reload:YES];
 }
 
 @end

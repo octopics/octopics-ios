@@ -52,7 +52,6 @@
    withMessage:self.textView.text
    success:^(AFGitHubAPIRequestOperation *operation, AFGitHubAPIResponse *responseObject) {
      [SVProgressHUD showSuccessWithStatus:@"Complete"];
-     [[NSNotificationCenter defaultCenter] postNotificationName:kOPXNotificationNewPicture object:nil userInfo:nil];
      [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
    }failure:^(AFGitHubAPIRequestOperation *operation, NSError *error) {
      [SVProgressHUD showErrorWithStatus:error.localizedDescription];

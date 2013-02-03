@@ -8,6 +8,7 @@
 
 #import "AFGitHubRepository+Octopics.h"
 #import "AFGIthub.h"
+#import "OPXGlobal.h"
 #import "OPXAppDelegate.h"
 #import "NSDate+InternetDateTime.h"
 #import <GRMustache/GRMustache.h>
@@ -50,6 +51,7 @@
        return;
      }
      htmlBlob.content = htmlContent;
+     OPXSetDefaultCacheOff();
      NSURLRequest *req = [NSURLRequest requestWithURL:self.indexJSONURL cachePolicy:NSURLCacheStorageNotAllowed timeoutInterval:0];
      AFJSONRequestOperation *op =
      [AFJSONRequestOperation
@@ -65,16 +67,16 @@
         NSError *error;
         AFGitHubBlob *indexHtmlBlob = [self indexHTMLBlobWithArray:buf error:&error];
         AFGitHubBlob *jsonBlob = [self indexJSONBlobWithArray:buf error:&error];
-        [self commitBlobs:@[pictureBlob, jsonBlob, htmlBlob, indexHtmlBlob] withMessage:message success:success failure:failure];
+        [self commitBlobs:@[pictureBlob, jsonBlob, htmlBlob, indexHtmlBlob] withMessage:message indexJSON:buf.copy success:success failure:failure];
+        OPXSetDefaultCacheOn();
       }
       failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        AFGitHubBlob *jsonBlob = [self indexJSONBlobWithArray:@[dict] error:&error];
-        AFGitHubBlob *indexHtmlBlob = [self indexHTMLBlobWithArray:@[dict] error:&error];
-        [self commitBlobs:@[pictureBlob, jsonBlob, htmlBlob, indexHtmlBlob] withMessage:message success:success failure:failure];
+        NSArray *indexJSON = @[dict];
+        AFGitHubBlob *jsonBlob = [self indexJSONBlobWithArray:indexJSON error:&error];
+        AFGitHubBlob *indexHtmlBlob = [self indexHTMLBlobWithArray:indexJSON error:&error];
+        [self commitBlobs:@[pictureBlob, jsonBlob, htmlBlob, indexHtmlBlob] withMessage:message indexJSON:indexJSON success:success failure:failure];
+        OPXSetDefaultCacheOn();
       }];
-     [op setCacheResponseBlock:^NSCachedURLResponse *(NSURLConnection *connection, NSCachedURLResponse *cachedResponse) {
-       return nil;
-     }];
      [op start];
    } failure:failure];
 }
@@ -97,6 +99,7 @@
 }
 
 - (void)commitBlobs:(NSArray *)blobs withMessage:(NSString *)message
+          indexJSON:(NSArray *)indexJSON
             success:(void (^)(AFGitHubAPIRequestOperation *operation, AFGitHubAPIResponse *responseObject))success
             failure:(void (^)(AFGitHubAPIRequestOperation *operation, NSError *error))failure {
   [self
@@ -118,7 +121,17 @@
            createCommit:commit
            success:^(AFGitHubAPIRequestOperation *operation, AFGitHubAPIResponse *responseObject) {
              ref.object = responseObject.first;
-             [self updateReference:ref force:NO success:success failure:failure];
+             [self
+              updateReference:ref
+              force:NO
+              success:^(AFGitHubAPIRequestOperation *operation, AFGitHubAPIResponse *responseObject) {
+                
+                [[NSNotificationCenter defaultCenter]
+                 postNotificationName:kOPXNotificationNewPicture object:nil
+                 userInfo:@{ @"pics": indexJSON }];
+                success(operation, responseObject);
+              }
+              failure:failure];
            }
            failure:failure];
         }

@@ -11,5 +11,6 @@
 @interface OPXPictureImageCell : UITableViewCell
 
 @property (nonatomic, copy) NSURL *imageURL;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 
 @end

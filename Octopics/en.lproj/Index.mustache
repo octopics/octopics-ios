@@ -8,14 +8,26 @@
     <meta property="og:title" content="Picture from Octopics - {{sha}}">
     <meta property="og:description" content="{{message}}">
     <title>Picture from Octopics - {{sha}}</title>
+    <style type="text/css">
+      body { margin: 10px; padding: 0; background: #000; color: white; font-family: Helvetica; font-size: 12px; }
+      ul.pics { margin: 0 0 0 -20px; padding: 0; list-style: none; }
+      ul.pics li { width: 300px; overflow: hidden;height: 400px; background: #222; margin: 0 0 20px 20px; float: left; }
+      ul.pics li p { margin: 0; padding: 0 10px;  }
+      ul.pics li p.img { padding: 10px; }
+      ul.pics li img { width: 280px; height: 280px; }
+    </style>
   </head>
   <body>
     <div class="wrapper">
+      <ul class="pics">
       {{#picts}}
-        <p><a href="{{permalink}}"><img src="{{image_url}}" /></a></p>
-        <p>{{created_at}}</p>
-        <p><strong>{{message}}</strong></p>
+        <li>
+          <p class="img"><a href="{{permalink}}"><img src="{{image_url}}" /></a></p>
+          <p class="ts">{{created_at}}</p>
+          <p class="mgs"><strong>{{message}}</strong></p>
+        </li>
       {{/picts}}
+      </ul>
     </div>
   </body>
 </html>

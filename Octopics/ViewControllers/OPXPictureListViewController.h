@@ -12,5 +12,6 @@
 @interface OPXPictureListViewController : UITableViewController
 
 @property (nonatomic, copy) AFGitHubRepository *repository;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end

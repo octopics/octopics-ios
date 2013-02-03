@@ -175,8 +175,18 @@
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="319"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="hpM-4u-ikV"/>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <constraints>
+                                    <constraint firstItem="hpM-4u-ikV" firstAttribute="centerX" secondItem="KYt-0i-V8N" secondAttribute="centerX" type="default" id="GVP-gd-4Bs"/>
+                                    <constraint firstItem="hpM-4u-ikV" firstAttribute="top" secondItem="KYt-0i-V8N" secondAttribute="top" constant="141" id="hrb-9v-VBv"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="activityIndicatorView" destination="hpM-4u-ikV" id="2fq-5b-lfg"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" textLabel="KFR-Yg-D65" rowHeight="40" style="IBUITableViewCellStyleDefault" id="4BZ-l0-CKg" customClass="OPXPictureMessageCell">
                                 <rect key="frame" x="0.0" y="342" width="320" height="40"/>
@@ -240,18 +250,18 @@
         <scene sceneID="Djv-Kf-fB8">
             <objects>
                 <tableViewController id="cfu-od-RMQ" customClass="OPXComposeViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="w5X-ID-yNE">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" rowHeight="250" sectionHeaderHeight="22" sectionFooterHeight="22" id="w5X-ID-yNE">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <sections>
                             <tableViewSection id="bqJ-hj-fI1">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="90" id="Wea-mu-7y4">
-                                        <rect key="frame" x="0.0" y="10" width="320" height="92"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Wea-mu-7y4">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="89"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="249"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="MM8-mC-Nys">
@@ -263,6 +273,7 @@
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" text="Write a commit message..." translatesAutoresizingMaskIntoConstraints="NO" id="4JP-23-e6W">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="213" id="AIL-sc-suj"/>
+                                                        <constraint firstAttribute="height" constant="89" id="Lw5-8B-zE0"/>
                                                     </constraints>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -270,9 +281,10 @@
                                                 </textView>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k1j-Vz-KHs">
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="89" id="1uA-UP-htN"/>
-                                                        <constraint firstAttribute="width" constant="213" id="pGk-q3-gNx"/>
+                                                        <constraint firstAttribute="width" constant="232" id="LPD-zk-YdI"/>
+                                                        <constraint firstAttribute="height" constant="239" id="rb4-4M-GHX"/>
                                                     </constraints>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <connections>
@@ -283,13 +295,12 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="4JP-23-e6W" firstAttribute="leading" secondItem="Wea-mu-7y4" secondAttribute="leading" constant="97" id="ZTf-so-a0g"/>
-                                            <constraint firstItem="MM8-mC-Nys" firstAttribute="leading" secondItem="Wea-mu-7y4" secondAttribute="leading" constant="20" type="default" id="g8h-Sd-mKW"/>
-                                            <constraint firstItem="4JP-23-e6W" firstAttribute="top" secondItem="k1j-Vz-KHs" secondAttribute="top" type="default" id="gEC-Ps-yKQ"/>
-                                            <constraint firstItem="4JP-23-e6W" firstAttribute="bottom" secondItem="k1j-Vz-KHs" secondAttribute="bottom" type="default" id="owz-16-TOi"/>
-                                            <constraint firstItem="4JP-23-e6W" firstAttribute="top" secondItem="Wea-mu-7y4" secondAttribute="top" constant="1" id="qmu-94-jbY"/>
-                                            <constraint firstItem="MM8-mC-Nys" firstAttribute="centerY" secondItem="Wea-mu-7y4" secondAttribute="centerY" type="default" id="sqr-aM-1gj"/>
-                                            <constraint firstItem="k1j-Vz-KHs" firstAttribute="leading" secondItem="Wea-mu-7y4" secondAttribute="leading" constant="90" id="xEb-Pc-p9m"/>
+                                            <constraint firstItem="4JP-23-e6W" firstAttribute="top" secondItem="k1j-Vz-KHs" secondAttribute="top" type="default" id="6Ws-fK-KUd"/>
+                                            <constraint firstItem="4JP-23-e6W" firstAttribute="top" secondItem="MM8-mC-Nys" secondAttribute="top" type="default" id="DHW-X2-93N"/>
+                                            <constraint firstItem="4JP-23-e6W" firstAttribute="leading" secondItem="MM8-mC-Nys" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="Mr5-eC-t6W"/>
+                                            <constraint firstItem="k1j-Vz-KHs" firstAttribute="leading" secondItem="MM8-mC-Nys" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="jUM-Va-K23"/>
+                                            <constraint firstItem="MM8-mC-Nys" firstAttribute="top" secondItem="Wea-mu-7y4" secondAttribute="top" constant="10" id="lw3-MO-7xR"/>
+                                            <constraint firstItem="k1j-Vz-KHs" firstAttribute="trailing" secondItem="Wea-mu-7y4" secondAttribute="trailing" type="default" id="p57-Tc-0to"/>
                                         </constraints>
                                     </tableViewCell>
                                 </cells>
@@ -322,7 +333,10 @@
         <scene sceneID="Fh2-1o-B5u">
             <objects>
                 <navigationController storyboardIdentifier="ComposeNavigationControler" definesPresentationContext="YES" id="g0H-Ca-gLW" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZnG-2r-1c1">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="blackOpaque" id="ZnG-2r-1c1">
+                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -590,6 +604,9 @@
         </class>
         <class className="OPXPictureImageCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/OPXPictureImageCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityIndicatorView" candidateClass="UIActivityIndicatorView"/>
+            </relationships>
         </class>
         <class className="OPXPictureListViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/OPXPictureListViewController.h"/>
