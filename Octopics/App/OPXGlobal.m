@@ -9,3 +9,6 @@
 #import "OPXGlobal.h"
 
 NSString *const kOPSDefaultsAccessTokenKey = @"OPSDefaultsAccessToken";
+NSString *const kOPSDefaultsCurrentUserKey = @"OPSDefaultsCurrentUser";
+NSString *const kOPSDefaultsCurrentRepositoryKey = @"OPSDefaultsCurrentRepository";
+NSString *const kOPSDefaultsCurrentHeadKey = @"OPSDefaultsCurrentHead";

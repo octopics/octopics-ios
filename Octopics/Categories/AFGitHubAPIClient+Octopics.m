@@ -27,15 +27,18 @@
        [[AFGitHubBlob alloc] initWithContent:@"<h1>It works</h1>" mode:nil path:@"index.html"]
        ].mutableCopy;
      AFGitHubRepository *repo = responseObject.first;
-     NSString *ref = [repo isGitHubPages] ? @"refs/heads/master" : @"refs/heads/gh-pages";
      [self
       createCommitWithTree:tree
-      forRef:ref
+      forRef:repo.gitHubPageRefString
       message:@"Initial commit from [Octopics](http://octopics.org/)."
       force:YES repository:repo
       success:success failure:failure];
    }
    failure:failure];
+}
+
+- (void)postPictureBlob:(AFGitHubBlob *)blob withMessage:(NSString *)message {
+  
 }
 
 

@@ -11,3 +11,6 @@
 #import "AFGitHubGlobal.h"
 
 extern NSString *const kOPSDefaultsAccessTokenKey;
+extern NSString *const kOPSDefaultsCurrentUserKey;
+extern NSString *const kOPSDefaultsCurrentRepositoryKey;
+extern NSString *const kOPSDefaultsCurrentHeadKey;

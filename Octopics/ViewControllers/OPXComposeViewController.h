@@ -11,7 +11,7 @@
 @class AFGitHubBlob;
 @interface OPXComposeViewController : UITableViewController<UITextViewDelegate>
 
-@property (nonatomic, copy) AFGitHubBlob *pictureBlob;
+@property (nonatomic, copy) UIImage *image;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UILabel *placeholderLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;

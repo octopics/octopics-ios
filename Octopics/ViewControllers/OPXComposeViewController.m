@@ -8,6 +8,9 @@
 
 #import "OPXComposeViewController.h"
 #import "OPXGlobal.h"
+#import "OPXAppDelegate.h"
+#import "AFGitHubRepository+Octopics.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface OPXComposeViewController ()
 
@@ -17,15 +20,13 @@
 
 @implementation OPXComposeViewController
 
-- (void)setPictureBlob:(AFGitHubBlob *)pictureBlob {
-  _pictureBlob = [pictureBlob copy];
-  
-  
-  [self.imageView setImage:pictureBlob.imageContent];
+- (void)setImage:(UIImage *)image {
+  _image = [image copy];
+  [self.imageView setImage:image];
 }
 
 - (void)viewDidLayoutSubviews {
-  [self.imageView setImage:self.pictureBlob.imageContent];
+  [self.imageView setImage:self.image];
   [super viewDidLayoutSubviews];
 }
 
@@ -45,7 +46,15 @@
 }
 
 - (IBAction)done:(id)sender {
-  
+  [[[OPXAppDelegate current] currentRepository]
+   postImage:self.image
+   withMessage:self.textView.text
+   success:^(AFGitHubAPIRequestOperation *operation, AFGitHubAPIResponse *responseObject) {
+     [SVProgressHUD showSuccessWithStatus:@"Done!"];
+     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+   }failure:^(AFGitHubAPIRequestOperation *operation, NSError *error) {
+     [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+   }];
 }
 
 - (IBAction)cancel:(id)sender {

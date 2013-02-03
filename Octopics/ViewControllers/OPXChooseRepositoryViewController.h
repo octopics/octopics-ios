@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AFGitHubRepositoryListViewController.h"
 
-@interface OPXChooseRepositoryViewController : UITableViewController
+@class AFGitHubUser;
+@interface OPXChooseRepositoryViewController : AFGitHubRepositoryListViewController
+
+@property (nonatomic, copy) AFGitHubUser *user;
 
 @end

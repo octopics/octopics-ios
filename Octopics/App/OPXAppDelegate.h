@@ -21,5 +21,6 @@
 + (OPXAppDelegate *)current;
 - (void)showMain;
 - (void)showLogin;
+- (void)persistData;
 
 @end

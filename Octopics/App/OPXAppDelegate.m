@@ -27,9 +27,20 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
   AFGitHubAPIClient *client = [AFGitHubAPIClient clientWithClientID:kAFGitHubClientID secret:kAFGitHubClientSecret];
-  NSString *accessToken = [[NSUserDefaults standardUserDefaults] objectForKey:kOPSDefaultsAccessTokenKey];
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  NSString *accessToken = [defaults objectForKey:kOPSDefaultsAccessTokenKey];
   if(AFGitHubIsStringWithAnyText(accessToken))
     [client setAuthorizationHeaderWithToken:accessToken];
+  id data = [defaults objectForKey:kOPSDefaultsCurrentHeadKey];
+  if(data)
+    self.currentHead = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+  data = [defaults objectForKey:kOPSDefaultsCurrentUserKey];
+  if(data)
+    self.currentUser = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+  data = [defaults objectForKey:kOPSDefaultsCurrentRepositoryKey];
+  if(data)
+    self.currentRepository = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+  
   [AFGitHubAPIClient setSharedClient:client];
   if([client isAuthenticated] && self.currentRepository) {
     [self showMain];
@@ -91,6 +102,16 @@
 
 #pragma mark - Session
 
+- (void)persistData {
+  NSData *reposData = [NSKeyedArchiver archivedDataWithRootObject:self.currentRepository];
+  NSData *userData = [NSKeyedArchiver archivedDataWithRootObject:self.currentUser];
+  NSData *headData = [NSKeyedArchiver archivedDataWithRootObject:self.currentHead];
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setObject:reposData forKey:kOPSDefaultsCurrentRepositoryKey];
+  [defaults setObject:userData forKey:kOPSDefaultsCurrentUserKey];
+  [defaults setObject:headData forKey:kOPSDefaultsCurrentHeadKey];
+}
+
 #pragma mark - Notification Observer
 
 - (void)didLogin:(NSNotification *)note {
@@ -125,9 +146,7 @@
     UIViewController *rvc = [self.window rootViewController];
     UINavigationController *nvc = [rvc.storyboard instantiateViewControllerWithIdentifier:@"ComposeNavigationControler"];
     OPXComposeViewController *vc = (OPXComposeViewController *)[nvc topViewController];
-    AFGitHubBlob *blob = [[AFGitHubBlob alloc] init];
-    [blob setImageContent:image];
-    [vc setPictureBlob:blob];
+    [vc setImage:image];
     [rvc presentViewController:nvc animated:NO completion:NULL];
   }];
 }

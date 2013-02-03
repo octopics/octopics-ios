@@ -89,6 +89,7 @@
   repo.name = self.nameTextField.text;
   repo.repositoryDescription = self.descriptionTextField.text;
   repo.owner = self.organization ? self.organization : self.user;
+  repo.homepage = repo.gitHubPagesURL.absoluteString;
   [SVProgressHUD showWithStatus:@"Initializing..." maskType:SVProgressHUDMaskTypeGradient];
   [client
    initRepository:repo
@@ -100,6 +101,7 @@
      [appDelegate setCurrentHead:commit];
      [appDelegate setCurrentRepository:repo];
      [appDelegate setCurrentUser:self.user];
+     [appDelegate persistData];
      [appDelegate showMain];
    }
    failure:^(AFGitHubAPIRequestOperation *operation, NSError *error) {
