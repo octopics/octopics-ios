@@ -1,6 +1,7 @@
 Octopics/AFGitHubAPIKeys.h
 
 Pods/
+# Xcode
 .DS_Store
 build/
 *.pbxuser
